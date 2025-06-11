@@ -241,6 +241,9 @@ Ce diagramme illustre l'exécution dynamique du système lors du scénario typiq
 ![alt text](image-10.png)
 
 
+## ⚙️ Vue Runtime – Scénario : Valider Commande
+
+![alt text](image-18.png)
 
 ## ⚙️ Vue Building Block
 
@@ -391,17 +394,156 @@ Ce diagramme illustre les rôles, responsabilités, et relations entre les diff�
 
 
 
+## 🔍 Diagramme de Raffinement
+
+
+# Description du Diagramme de Raffinement – Gestion de la Commande
+
+Ce diagramme de raffinement illustre les étapes clés et les interactions nécessaires pour gérer une commande dans le système de boutique en ligne. Il décompose le processus en plusieurs sous-activités pour offrir une vue détaillée des opérations.
+
+---
+
+## **1. Gérer commande**
+Cette étape représente les actions principales liées à la gestion des commandes. Elle inclut :
+- **Créer commande** : Génération d'une nouvelle commande à partir du panier.
+- **Enregistrer commande** : Sauvegarde des informations de la commande dans la base de données.
+- **Valider commande** : Confirmation de la commande par le client.
+- **Annuler commande** : Permet au client ou au système d'annuler une commande en cas de problème.
+
+---
+
+## **2. Traiter commande**
+Une fois la commande créée, elle passe par un processus de traitement. Les sous-activités incluent :
+- **Vérifier stock** : Vérification de la disponibilité des produits commandés.
+- **Réserver produits** : Réservation des produits dans le stock pour éviter les conflits.
+- **Confirmer paiement** : Validation du paiement effectué par le client.
+- **Historiser les opérations** : Enregistrement des étapes du traitement pour le suivi et la traçabilité.
+
+---
+
+## **3. Suivre livraison**
+Après le traitement de la commande, le système passe à la gestion de la livraison. Cette étape inclut :
+- Suivi de l'expédition des produits.
+- Mise à jour du statut de la commande pour le client.
+- Coordination avec les services de livraison externes.
+
+---
+
+## **Transitions**
+- **Entre "Gérer commande" et "Traiter commande"** : Une commande validée passe automatiquement au traitement.
+- **Entre "Traiter commande" et "Suivre livraison"** : Une commande traitée est prête à être expédiée.
+
+---
+
+## **Résumé**
+Ce diagramme de raffinement offre une vue claire des interactions entre les différentes étapes du processus de gestion des commandes. Il met en évidence les flux critiques, tels que la vérification du stock, la validation du paiement, et le suivi de la livraison, pour garantir une expérience utilisateur fluide et efficace.
+![alt text](image-19.png)
+---
+
+Ce diagramme de raffinement offre une vue claire des interactions entre les acteurs, les services, et les bases de données, tout en soulignant les flux critiques du système.
+
+
+# Description du Diagramme de Raffinement – Gestion du Stock, Produit, et Notification
+
+Ce diagramme de raffinement illustre les étapes clés et les interactions nécessaires pour gérer le stock, les produits, et les notifications dans le système de boutique en ligne. Il décompose le processus en plusieurs sous-activités pour offrir une vue détaillée des opérations.
+
+---
+
+## **1. Gérer stock**
+Cette étape représente les actions principales liées à la gestion du stock. Elle inclut :
+- **Vérifier le stock** : Contrôle de la disponibilité des produits en stock.
+- **Mise à jour du stock** : Modification des quantités disponibles en fonction des opérations (ajout ou retrait).
+- **Consulter les alertes de seuil** : Surveillance des niveaux critiques de stock pour éviter les ruptures.
+
+---
+
+## **2. Gérer produit**
+Une fois le stock vérifié, le système passe à la gestion des produits. Les sous-activités incluent :
+- **Scanner le code produit** : Identification des produits via un code unique (exemple : code-barres).
+- **Modifier la quantité** : Ajustement des quantités disponibles pour un produit spécifique.
+- **Valider les opérations** : Confirmation des modifications apportées au produit.
+- **Historiser les opérations** : Enregistrement des actions effectuées pour le suivi et la traçabilité.
+
+---
+
+## **3. Gérer notification**
+Après la gestion des produits, le système passe à la gestion des notifications. Cette étape inclut :
+- **Envoi d'alertes** : Notification des vendeurs ou administrateurs en cas de seuil critique atteint.
+- **Mise à jour des statuts** : Indication des actions nécessaires pour résoudre les problèmes liés au stock.
+- **Coordination** : Communication avec les parties concernées pour garantir une gestion efficace.
+
+---
+
+## **Transitions**
+- **Entre "Gérer stock" et "Gérer produit"** : Une fois le stock vérifié, les produits peuvent être modifiés ou ajustés.
+- **Entre "Gérer produit" et "Gérer notification"** : Les modifications apportées aux produits déclenchent des notifications si nécessaire.
+
+---
+
+## **Résumé**
+Ce diagramme de raffinement offre une vue claire des interactions entre les différentes étapes du processus de gestion du stock, des produits, et des notifications. Il met en évidence les flux critiques, tels que la vérification du stock, la modification des produits, et l'envoi des alertes, pour garantir une gestion efficace et proactive.
+
+![alt text](image-20.png)
+## 🔄 Diagramme FSM – Gestion des Commandes
+
+# Description du Diagramme FSM – Gestion des Commandes
+
+Ce diagramme représente un **modèle FSM (Facteur, Critère, Métrique)** pour évaluer les aspects clés du système de gestion des commandes dans une boutique en ligne. Voici une description détaillée des éléments :
+
+---
+
+## **1. Facteurs**
+Les facteurs sont les grandes catégories qui définissent les objectifs principaux du système :
+- **Pertinence Fonctionnelle** : Évalue la capacité du système à répondre aux besoins fonctionnels.
+- **Performance** : Mesure la rapidité et l'efficacité du système.
+- **Sécurité** : Évalue la protection des données et la confidentialité.
+
+---
+
+## **2. Critères**
+Les critères sont des sous-catégories qui détaillent les facteurs :
+### **Pertinence Fonctionnelle**
+- **Précision** : Capacité à afficher des résultats détaillés et exacts (exemple : historique des commandes ou produits).
+- **Conformité** : Respect des exigences définies dans le cahier des charges.
+- **Ergonomie** : Facilité d'utilisation et interface utilisateur intuitive.
+- **Fiabilité** : Disponibilité et stabilité du système.
+
+### **Performance**
+- **Temps de réponse** : Rapidité d'exécution des actions (exemple : temps de réponse inférieur à 2 secondes).
+
+### **Sécurité**
+- **Confidentialité** : Protection des données utilisateur et limitation des accès.
+  - Un seul rôle/login par utilisateur.
+  - Paiement sécurisé.
+
+---
+
+## **3. Métriques**
+Les métriques sont des indicateurs mesurables pour évaluer les critères :
+### **Pertinence Fonctionnelle**
+- **Précision** : Affichage des résultats détaillés (exemple : historique des commandes ou produits).
+- **Conformité** : Vérification par rapport au cahier des charges.
+- **Ergonomie** : Utilisation de couleurs conformes et claires pour une interface intuitive.
+- **Fiabilité** : Haute disponibilité du système (24h/24, 7j/7).
+
+### **Performance**
+- **Temps de réponse** : Mesure du temps d'exécution des actions (exemple : < 2 secondes).
+
+### **Sécurité**
+- **Confidentialité** :
+  - Un seul rôle/login par utilisateur.
+  - Paiement sécurisé pour protéger les données financières.
+
+---
+
+
+![alt text](image-17.png)
 
 
 
 
-
-
-
-
-
-
-
+## **Résumé**
+Ce diagramme FSM permet de structurer l'évaluation des fonctionnalités, de la performance et de la sécurité du système. Il aide à identifier les points forts et les axes d'amélioration pour garantir une expérience utilisateur optimale et sécurisée.
 
 
 
