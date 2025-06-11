@@ -1,0 +1,91 @@
+@startuml UseCaseDiagram
+left to right direction
+skinparam packageStyle rectangle
+
+actor Client
+
+rectangle "Système Boutique en Ligne" {
+  
+  ' ----------- Consultation Produits ----------
+  usecase "Consulter les produits" as UC1
+  usecase "Rechercher produits" as UC1a
+  usecase "Filtrer produits" as UC1b
+
+  ' ----------- Panier ----------
+  usecase "Gérer le panier" as UC2
+  usecase "Ajouter produit au panier" as UC2a
+  usecase "Modifier quantité" as UC2b
+  usecase "Supprimer produit du panier" as UC2c
+
+  ' ----------- Commande ----------
+  usecase "Passer une commande" as UC3
+  usecase "Choisir adresse de livraison" as UC3a
+  usecase "Choisir mode de livraison" as UC3b
+  usecase "Valider la commande" as UC3c
+
+  ' ----------- Paiement ----------
+  usecase "Payer En Ligne Ou a La Livraison" as UC3d
+
+
+  ' ----------- Suivi Commande ----------
+  usecase "Suivre ses commandes" as UC5
+  usecase "Voir statut de livraison" as UC5a
+  usecase "Voir historique des commandes" as UC5b
+
+  ' ----------- Compte Client ----------
+
+  usecase "Consulter ses informations personnelles" as UC7
+  usecase "Modifier mot de passe" as UC7a
+  usecase "Modifier Les Informations Publique" as UC7b
+
+  ' ----------- Réclamation ----------
+  usecase "Créer une réclamation" as UC8
+  usecase "Suivre une réclamation" as UC8a
+  usecase "Annuler une réclamation" as UC8b
+
+  ' ----------- Support ----------
+  usecase "Contacter le support" as UC9
+  usecase "Contacter par Email" as UC9a
+}
+
+' Liens principaux Client -> modules
+Client -- UC1
+Client -- UC2
+Client -- UC3
+Client -- UC5
+Client -- UC7
+Client -- UC8
+Client -- UC9
+
+' Détail Consultation Produits
+UC1 .down.> UC1a : <<extend>>
+UC1 .down.> UC1b : <<extend>>
+' Generalization for Gestion Panier
+UC2a -up-|> UC2
+UC2b -up-|> UC2
+UC2c -up-|> UC2
+
+
+' Détail Commande
+UC3 .down.> UC3a : <<include>>
+UC3 .down.> UC3b : <<include>>
+UC3 .down.> UC3c : <<include>>
+UC3 .down.> UC3d : <<include>>
+
+
+' Détail Suivi Commande
+UC5 .down.> UC5a : <<extend>>
+UC5 .down.> UC5b : <<extend>>
+
+' Détail Compte Client
+UC7 .down.> UC7a : <<extend>>
+UC7 .down.> UC7b : <<extend>>
+
+' Détail Réclamation
+UC8 .down.> UC8a : <<extend>>
+UC8 .down.> UC8b : <<extend>>
+
+' Détail Support
+UC9 .down.> UC9a : <<extend>>
+
+@enduml

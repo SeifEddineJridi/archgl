@@ -1,0 +1,43 @@
+@startuml
+title Vue Runtime - Scénario : Passage de commande
+
+actor Client
+participant "Frontend Web" as Frontend
+participant "API Gateway" as APIGateway
+participant "Service Authentification" as AuthService
+participant "Service Produit" as ProductService
+participant "Service Commande" as OrderService
+participant "Service Paiement" as PaymentService
+participant "Service Livraison" as DeliveryService
+participant "PaymentService"
+
+Client -> Frontend : Se connecter
+Frontend -> APIGateway : Requête d'authentification
+APIGateway -> AuthService : Vérification des identifiants
+AuthService --> APIGateway : Token JWT
+APIGateway --> Frontend : OK (authentifié)
+
+Client -> Frontend : Ajouter un/des produit au panier
+Frontend -> APIGateway : Vérifier la disponibilité du produit(s)
+APIGateway -> ProductService : getProduit(id)
+ProductService --> APIGateway : Infos produit(s)
+APIGateway --> Frontend : 
+
+Client -> Frontend : Passer une commande
+Frontend -> APIGateway : Créer une commande
+APIGateway -> OrderService : nouvelleCommande()
+OrderService --> APIGateway : Commande créée
+
+alt [Paiement réussi]
+    APIGateway -> PaymentService : Envoyer les détails de paiement
+    PaymentService --> APIGateway : paiementOK
+    APIGateway -> Frontend : afficherConfirmationCommande()
+    Frontend -> Client : Commande confirmée Passage Au Livraison
+else [Paiement échoué]
+    APIGateway -> PaymentService : Envoyer les détails de paiement
+    PaymentService --> APIGateway : paiementKO
+    APIGateway -> Frontend : afficherErreurPaiement()
+    Frontend -> Client : Erreur de paiement reéssayer s'il vous plait
+end
+
+@enduml

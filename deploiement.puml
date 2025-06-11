@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+title Deployment Diagram - Système de Boutique en Ligne
+
+
+node "PC/Laptop" {
+    [Navigateur Web] <<component>>
+}
+
+node "API Gateway" {
+    [Point d'entrée unique] <<artifact>>
+}
+
+node "Web Application" {
+    [Service Produit]
+    [Service Commande]
+    [Service Paiement]
+    [Service Réclamation]
+    [Service Authentification]
+    [Service Vendeur]
+    [Service Admin]
+}
+
+node "Base de Données" {
+    [DB Utilisateurs] <<database>>
+    [DB Produits] <<database>>
+    [DB Commandes] <<database>>
+    [DB Réclamations] <<database>>
+    [DB Paiements] <<database>>
+}
+
+"PC/Laptop" - "API Gateway"
+"API Gateway" - "Web Application"
+"Web Application" - "Base de Données"
+@enduml

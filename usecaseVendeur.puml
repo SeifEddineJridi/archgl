@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+
+actor Vendeur
+
+rectangle "Système Boutique en Ligne Vue De Contexte Vendeur" {
+    usecase "Gérer les stocks" as UC4
+    usecase "Créer un produit" as UC1
+    usecase "Modifier un produit" as UC2
+    usecase "Supprimer un produit" as UC3
+
+    usecase "Gerer Les commandes" as UC6
+    usecase "Expédier une commande" as UC6b
+    usecase "Annuler une commande" as UC9
+    usecase "Suivre les commandes clients" as UC5
+    usecase "Consulter ses ventes" as UC7
+
+  usecase "Consulter ses informations personnelles" as UC8
+  usecase "Modifier mot de passe" as UC8a
+  usecase "Modifier Les Informations Publique" as UC8b
+    usecase "Afficher Statistique Par Produit" as UC12
+    usecase "Afficher Statistique Par Categorie Client" as UC13
+}
+
+Vendeur -- UC4
+Vendeur -- UC6
+Vendeur -- UC7
+Vendeur -- UC8
+
+UC1 -up-|> UC4
+UC2 -up-|> UC4
+UC3 -up-|> UC4
+UC6 .down.>  UC5 : <<extend>>
+UC6 .down.>  UC6b : <<extend>>
+UC6 .down.>  UC9 : <<extend>>
+UC7 .down.> UC12 : <<extend>>
+UC7 .down.> UC13 : <<extend>>
+UC8 .down.> UC8a : <<extend>>
+UC8 .down.> UC8b : <<extend>>
+@enduml
