@@ -1,0 +1,10 @@
+@startuml fsm_diagram
+[*] --> Creee : nouvelleCommande()
+Creee --> AttentePaiement : validerCommande()
+AttentePaiement --> Payee : paiementRecu()
+AttentePaiement --> Annulee : annulerCommande()
+Payee --> Expediee : envoyerColis()
+Expediee --> Livree : livraisonConfirmee()
+Payee --> Annulee : annulerCommande()
+[*] --> Annulee : erreur
+@enduml
