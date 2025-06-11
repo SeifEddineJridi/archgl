@@ -1,5 +1,29 @@
 # 🛒 Système de Boutique en Ligne – Cahier des Besoins
+## 📖 Introduction Générale
 
+Ce document présente le cahier des besoins pour un système de boutique en ligne. Il décrit les fonctionnalités principales, les modules impliqués, les besoins non fonctionnels, ainsi que les vues architecturales nécessaires pour concevoir et développer la plateforme. Ce système vise à offrir une expérience utilisateur fluide et sécurisée pour les clients, les vendeurs et les administrateurs.
+
+---
+
+## 📋 Table des Matières
+
+1. [✅ Modules et Sous-Modules](#-modules-et-sous-modules)  
+  - [🔹 Module 1 : Espace Client](#-module-1--espace-client)  
+  - [🔹 Module 2 : Espace Vendeur](#-module-2--espace-vendeur)  
+  - [🔹 Module 3 : Espace Administrateur](#-module-3--espace-administrateur)  
+
+2. [📐 Besoins Non Fonctionnels](#-besoins-non-fonctionnels)  
+
+3. [🌐 Vue de Contexte](#-vue-de-contexte)  
+
+4. [👥 Conception par Acteur – Boutique en Ligne](#-conception-par-acteur--boutique-en-ligne)  
+  - [👤 Client](#-1-client)  
+  - [🛍️ Vendeur](#-2-vendeur)  
+  - [🛡️ Administrateur](#-3-administrateur)  
+
+5. [🖧 Vue de Déploiement](#-vue-de-déploiement)  
+
+6. [⚙️ Vue Runtime – Scénario : Passage de Commande](#-vue-runtime--scénario--passage-de-commande)  
 ## ✅ Modules et Sous-Modules
 
 ### 🔹 Module 1 : Espace Client
@@ -139,9 +163,16 @@ L’acteur principal du système. Il navigue sur le site pour consulter, acheter
 - Modifier ses informations personnelles
 - Ajouter, consulter ou supprimer une réclamation
 - Contacter le support
-
 ---
-![alt text](image-6.png)
+
+
+![alt text](image-11.png)
+
+
+
+
+
+
 ## 🛍️ 2. Vendeur
 
 ### 🎯 Rôle :
@@ -161,7 +192,7 @@ Utilisateur professionnel ayant un espace personnel lui permettant de publier et
 - Se connecter et gérer son compte
 
 ---
-
+![alt text](image-13.png)
 ## 🛡️ 3. Administrateur
 
 ### 🎯 Rôle :
@@ -181,7 +212,7 @@ Supervise le fonctionnement global de la plateforme. Il n’intervient pas direc
 - Garantir la conformité des publications
 
 ---
-
+![alt text](image-14.png)
 ## 🖧 Vue de Déploiement
 
 Cette vue décrit la structure d’hébergement du système : navigateurs, passerelle API, services indépendants, et bases de données.
@@ -192,7 +223,7 @@ Cette vue décrit la structure d’hébergement du système : navigateurs, passe
 - **Microservices** (auth, produit, commande, paiement, réclamation…)
 - **Bases de données** spécifiques à chaque domaine
 
-![alt text](image-2.png)
+![alt text](image-15.png)
 
 ---
 
@@ -207,18 +238,155 @@ Ce diagramme illustre l'exécution dynamique du système lors du scénario typiq
 4. Paiement
 5. Livraison
 
-
-![alt text](image-8.png)
-
+![alt text](image-10.png)
 
 
 
-
+## ⚙️ Vue Building Block
 
 
 
 
 
+Ce diagramme représente un **diagramme de Building Block** pour un système de boutique en ligne. Voici une description détaillée des éléments et relations :
+
+---
+
+## **1. Classe `Utilisateur` (Classe Parent)**
+- **Attributs** :
+  - `id` : Identifiant unique de l'utilisateur.
+  - `nom` : Nom de l'utilisateur.
+  - `email` : Adresse email de l'utilisateur.
+  - `motDePasse` : Mot de passe de l'utilisateur.
+- **Méthodes** :
+  - `seConnecter()` : Permet à l'utilisateur de se connecter au système.
+  - `seDeconnecter()` : Permet à l'utilisateur de se déconnecter.
+
+Cette classe est une classe parent pour les rôles spécifiques : `Client`, `Vendeur`, et `Admin`.
+
+---
+
+## **2. Classe `Client` (Héritage de `Utilisateur`)**
+- **Méthodes** :
+  - `modifierProfil()` : Permet au client de modifier ses informations personnelles.
+  - `passerCommande()` : Permet au client de passer une commande.
+
+Le client est associé aux classes suivantes :
+- **`Panier`** : Chaque client possède un panier (relation 1 à 1).
+- **`Commande`** : Un client peut passer plusieurs commandes (relation 1 à 0..*).
+
+---
+
+## **3. Classe `Vendeur` (Héritage de `Utilisateur`)**
+- **Méthodes** :
+  - `gererProduits()` : Permet au vendeur de gérer ses produits (ajouter, modifier, supprimer).
+  - `consulterCommandes()` : Permet au vendeur de consulter les commandes passées par les clients.
+
+Le vendeur est principalement lié à la gestion des produits et des commandes.
+
+---
+
+## **4. Classe `Admin` (Héritage de `Utilisateur`)**
+- **Méthodes** :
+  - `gererUtilisateurs()` : Permet de gérer les comptes des utilisateurs (clients et vendeurs).
+  - `gererVendeurs()` : Permet de superviser les vendeurs.
+  - `superviserSysteme()` : Permet de superviser l'ensemble du système.
+
+L'admin a un rôle de supervision et de gestion globale.
+
+---
+
+## **5. Classe `Panier`**
+- **Attributs** :
+  - `id` : Identifiant unique du panier.
+  - `dateCreation` : Date de création du panier.
+- **Méthodes** :
+  - `ajouterProduit()` : Permet d'ajouter un produit au panier.
+  - `supprimerProduit()` : Permet de retirer un produit du panier.
+  - `calculerTotal()` : Calcule le total des produits dans le panier.
+
+Un panier est lié à plusieurs produits (relation * à *).
+
+---
+
+## **6. Classe `Produit`**
+- **Attributs** :
+  - `id` : Identifiant unique du produit.
+  - `nom` : Nom du produit.
+  - `description` : Description du produit.
+  - `prix` : Prix du produit.
+  - `stock` : Quantité disponible en stock.
+  - `categorie` : Catégorie du produit.
+
+Les produits sont gérés par les vendeurs et ajoutés au panier par les clients.
+
+---
+
+## **7. Classe `Commande`**
+- **Attributs** :
+  - `id` : Identifiant unique de la commande.
+  - `dateCommande` : Date de la commande.
+  - `statut` : Statut de la commande (ex. : en cours, expédiée, annulée).
+  - `montantTotal` : Montant total de la commande.
+- **Méthodes** :
+  - `suivreCommande()` : Permet de suivre l'état de la commande.
+  - `annulerCommande()` : Permet d'annuler une commande.
+
+Une commande est associée à un client et peut inclure un paiement.
+
+---
+
+## **8. Classe `Paiement`**
+- **Attributs** :
+  - `id` : Identifiant unique du paiement.
+  - `montant` : Montant du paiement.
+  - `methode` : Méthode de paiement (ex. : carte bancaire, PayPal).
+  - `statut` : Statut du paiement (ex. : réussi, échoué).
+- **Méthodes** :
+  - `effectuerPaiement()` : Permet de traiter un paiement.
+
+Le paiement est lié à une commande.
+
+---
+
+## **9. Classe `Reclamation`**
+- **Attributs** :
+  - `id` : Identifiant unique de la réclamation.
+  - `sujet` : Sujet de la réclamation.
+  - `message` : Message détaillant la réclamation.
+  - `statut` : Statut de la réclamation (ex. : en cours, résolue).
+  - `dateCreation` : Date de création de la réclamation.
+- **Méthodes** :
+  - `creerReclamation()` : Permet de soumettre une réclamation.
+
+Une réclamation est liée à un client et peut être suivie par le support.
+
+---
+
+## **10. Classe `Support`**
+- **Méthodes** :
+  - `contacterParEmail()` : Permet de contacter le support par email.
+  - `contacterParChat()` : Permet de contacter le support via un chat.
+
+Le support est lié à la gestion des réclamations.
+
+---
+
+## **Relations Principales**
+1. **Héritage** :
+   - `Client`, `Vendeur`, et `Admin` héritent de la classe `Utilisateur`.
+2. **Associations** :
+   - `Client` est associé à `Panier`, `Commande`, et `Reclamation`.
+   - `Commande` est associée à `Paiement`.
+   - `Panier` est associé à plusieurs `Produit`.
+   - `Reclamation` est associée à `Support`.
+
+---
+
+Ce diagramme illustre les rôles, responsabilités, et relations entre les différentes entités du système de boutique en ligne.
+
+
+![alt text](image-16.png)
 
 
 
@@ -236,7 +404,9 @@ Ce diagramme illustre l'exécution dynamique du système lors du scénario typiq
 
 
 
-## 🧱 Vue Building Block – Architecture des Composants
+
+
+<!-- ## 🧱 Vue Building Block – Architecture des Composants
 
 La vue **Building Block** présente l'architecture interne du système de la boutique en ligne. Elle met en évidence les principaux composants logiciels (ou "blocs") qui composent le système, leurs responsabilités et leurs interactions via une architecture orientée microservices.
 
@@ -286,7 +456,7 @@ La vue **Building Block** présente l'architecture interne du système de la bou
 
 ---
 
-Cette architecture permet une scalabilité horizontale, une séparation claire des responsabilités et une maintenance facilitée grâce à l’indépendance des modules.
+Cette architecture permet une scalabilité horizontale, une séparation claire des responsabilités et une maintenance facilitée grâce à l’indépendance des modules. -->
 
 
 
